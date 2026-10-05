@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-image');
     const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev'); // NOWE
+    const lightboxNext = document.getElementById('lightbox-next'); // NOWE
 
     document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
     let lastTouchEnd = 0;
@@ -215,6 +217,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (currentIndex === 1) navPrev.classList.add('invisible'); 
         else navPrev.classList.remove('invisible'); 
+
+        // Ukrywanie strzałek w lightboxie na skrajnych zdjęciach
+        if (currentIndex === 1) lightboxPrev.classList.add('hidden-btn');
+        else lightboxPrev.classList.remove('hidden-btn');
+
+        if (currentIndex === TOTAL_IMAGES) lightboxNext.classList.add('hidden-btn');
+        else lightboxNext.classList.remove('hidden-btn');
     };
 
 
@@ -256,14 +265,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lightboxClose.addEventListener('click', closeLightbox);
 
+    lightboxNext.addEventListener('click', (e) => {
+        e.stopPropagation(); // Blokuje zamknięcie lightboxa po kliknięciu
+        if (currentIndex < TOTAL_IMAGES) {
+            window.location.hash = `#gallery/${currentIndex + 1}`;
+        } else if (currentIndex === TOTAL_IMAGES) {
+            window.location.hash = '#farewell';
+            closeLightbox();
+        }
+    });
+
+    lightboxPrev.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (currentIndex > 1) {
+            window.location.hash = `#gallery/${currentIndex - 1}`;
+        }
+    });
+
     let touchStartX = 0;
     let touchEndX = 0;
 
     lightbox.addEventListener('touchstart', e => {
+        if (e.target.closest('.lightbox-nav-btn')) return;
         touchStartX = e.changedTouches[0].screenX;
     }, {passive: true});
 
     lightbox.addEventListener('touchend', e => {
+        if (e.target.closest('.lightbox-nav-btn')) return;
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     }, {passive: true});
@@ -271,14 +299,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const handleSwipe = () => {
         const swipeDistance = touchEndX - touchStartX;
         
-        if (swipeDistance < -50) {
+        if (swipeDistance < -50) { 
             if (currentIndex < TOTAL_IMAGES) {
                 window.location.hash = `#gallery/${currentIndex + 1}`;
             } else if (currentIndex === TOTAL_IMAGES) {
                 window.location.hash = '#farewell';
                 closeLightbox();
             }
-        } else if (swipeDistance > 50) {
+        } else if (swipeDistance > 50) { 
             if (currentIndex > 1) {
                 window.location.hash = `#gallery/${currentIndex - 1}`;
             }
@@ -286,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     lightbox.addEventListener('click', (e) => {
-        if(e.target === lightbox && Math.abs(touchEndX - touchStartX) < 50) {
+        if (e.target === lightbox && Math.abs(touchEndX - touchStartX) < 50) {
             closeLightbox();
         }
     });
