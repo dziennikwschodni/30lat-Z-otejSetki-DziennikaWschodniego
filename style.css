@@ -438,3 +438,36 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     p { font-size: 0.85rem; margin-bottom: 0.5rem; }
     .gold-btn { padding: 8px 15px; font-size: 0.9rem; }
 }
+
+.lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5); /* Ciemniejsze tło, żeby były widoczne nad jasnymi zdjęciami */
+    border: none;
+    color: white;
+    font-size: 2.5rem; /* Troszkę mniejsze niż główne, by nie zasłaniały kadru */
+    cursor: pointer;
+    text-shadow: 0 0 10px black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: opacity 0.3s, background 0.3s;
+    z-index: 2002; /* Muszą być nad zdjęciem (2000) */
+}
+.lightbox-nav-btn:hover { background: rgba(0, 0, 0, 0.8); }
+
+#lightbox-prev { left: 10px; }
+#lightbox-next { right: 10px; }
+
+/* Ukrywanie strzałek, np. gdy jesteśmy na pierwszym zdjęciu (nie możemy cofać) */
+.lightbox-nav-btn.hidden-btn {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    /* Na telefonach przesunięcie do samej krawędzi ekranu */
+    .lightbox-nav-btn { font-size: 2rem; padding: 5px 10px; }
+    #lightbox-prev { left: 0px; }
+    #lightbox-next { right: 0px; }
+}
