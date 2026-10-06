@@ -190,6 +190,11 @@ p {
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     transition: transform 0.2s;
+    /* NOWE: Wyrównanie dla ikon i tekstu przycisku */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 .gold-btn:active { transform: scale(0.95); }
 
@@ -207,11 +212,15 @@ footer {
     margin-top: 10px;
 }
 
+/* WIDOK ZDJĘCIA ODBLOKOWANY DLA SCROLLA */
 #view-gallery {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 2vh 10px;
+    /* NOWE: Włączenie scrolla dla całej planszy w razie ciasnoty */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .gallery-main-area {
     display: flex;
@@ -365,13 +374,12 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
 .grid-item:active { transform: scale(0.95); }
 .grid-footer { margin-top: auto; padding-bottom: 20px; }
 
-
-/* --- POPRAWKI DLA LIGHTBOXA (POWIĘKSZENIA) --- */
+/* LIGHTBOX */
 .lightbox-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; 
     height: 100vh;
-    height: 100dvh; /* NOWE: Dynamiczna wysokość (dvh) dostosowuje się idealnie do żółtych pasków Safari */
+    height: 100dvh; 
     background: rgba(0, 0, 0, 0.95);
     z-index: 2000;
     display: flex;
@@ -385,14 +393,13 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     pointer-events: none;
 }
 #lightbox-image {
-    max-width: 85vw; /* Zmniejszone, by dać przestrzeń na nowe strzałki nawigacyjne po bokach */
+    max-width: 85vw; 
     max-height: 85vh;
-    max-height: 85dvh; /* NOWE: Ochrona przed ucinaniem zdjęcia od dołu */
+    max-height: 85dvh; 
     object-fit: contain;
     border: 2px solid var(--gold-dark);
-    box-sizing: border-box; /* Zabezpiecza ramkę przed rozciąganiem kadru */
+    box-sizing: border-box; 
 }
-
 .lightbox-close {
     position: absolute;
     top: 20px; right: 20px;
@@ -404,8 +411,6 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     z-index: 2001;
     text-shadow: 0 0 10px black;
 }
-
-/* STRZAŁKI W LIGHTBOXIE */
 .lightbox-nav-btn {
     position: absolute;
     top: 50%;
@@ -431,8 +436,6 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     pointer-events: none;
 }
 
-
-/* --- ZAPYTANIA MEDIALNE (TELEFONY I LANDSCAPE) --- */
 @media (max-width: 768px) {
     .content-box { padding: 1.5rem 1rem; }
     h1 { font-size: 1.5rem; }
@@ -451,13 +454,13 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     
     #view-gallery {
         flex-direction: row;
-        align-items: center;
-        padding: 10px 20px;
+        align-items: flex-start; /* FIX: Odblokowuje scroll z samej góry */
+        padding: 20px;
     }
     
     .gallery-main-area {
         width: 60%;
-        margin: 0 20px;
+        margin: auto 20px; /* FIX: Pozwala obrazkowi rozpychać wysokość i włączyć scrolla */
     }
     
     #gallery-image { max-height: 85vh; }
@@ -467,7 +470,9 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
         flex-direction: column;
         justify-content: center;
         width: 20%;
-        height: 100%;
+        height: auto;
+        min-height: 100%;
+        margin: auto 0;
     }
     .landscape-left { align-items: flex-start; }
     .landscape-right { align-items: flex-end; text-align: right; justify-content: space-between; padding: 20px 0; }
@@ -496,10 +501,9 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
         padding-bottom: 50px; 
     }
 
-    /* NOWE: Ograniczenie wielkości zdjęcia w powiększeniu poziomo na małych ekranach */
     #lightbox-image {
-        max-width: 75vw; /* Zwężenie na strzałki */
+        max-width: 75vw; 
         max-height: 80vh; 
-        max-height: 80dvh; /* Utrzymanie zdjęcia z dala od pasków URL */
+        max-height: 80dvh; 
     }
 }
