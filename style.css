@@ -117,13 +117,22 @@ body.high-contrast .contrast-toggle { color: var(--gold-dark); opacity: 1; }
 .flex-view {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: flex-start;
     align-items: center;
     padding: 4vh 20px;
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
+    gap: 3vh; 
+}
+
+.flex-view header, 
+.flex-view .content-box, 
+.flex-view footer {
+    flex-shrink: 0;
 }
 
 header { text-align: center; }
-.logo-large { max-width: 250px; height: auto; display: block; }
+.logo-large { max-width: 250px; height: auto; display: block; margin: 0 auto; }
 .logo-small { max-width: 150px; height: auto; display: block; margin: 0 auto; }
 .logo-landscape { max-width: 140px; height: auto; display: block; }
 
@@ -142,7 +151,7 @@ header { text-align: center; }
     text-align: center;
     max-width: 90%;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    margin: auto 0; 
+    margin: 3vh 0; 
 }
 
 h1 {
@@ -388,9 +397,29 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     text-shadow: 0 0 10px black;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0.5; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
+.lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5); 
+    border: none;
+    color: white;
+    font-size: 2.5rem; 
+    cursor: pointer;
+    text-shadow: 0 0 10px black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: opacity 0.3s, background 0.3s;
+    z-index: 2002; 
+}
+.lightbox-nav-btn:hover { background: rgba(0, 0, 0, 0.8); }
+
+#lightbox-prev { left: 10px; }
+#lightbox-next { right: 10px; }
+
+.lightbox-nav-btn.hidden-btn {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -400,6 +429,10 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     #nav-prev { left: -10px; } 
     #nav-next { right: -10px; }
     .grid-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    
+    .lightbox-nav-btn { font-size: 2rem; padding: 5px 10px; }
+    #lightbox-prev { left: 0px; }
+    #lightbox-next { right: 0px; }
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
@@ -437,37 +470,18 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     h1 { font-size: 1.2rem; margin-bottom: 0.5rem; }
     p { font-size: 0.85rem; margin-bottom: 0.5rem; }
     .gold-btn { padding: 8px 15px; font-size: 0.9rem; }
-}
 
-.lightbox-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5); /* Ciemniejsze tło, żeby były widoczne nad jasnymi zdjęciami */
-    border: none;
-    color: white;
-    font-size: 2.5rem; /* Troszkę mniejsze niż główne, by nie zasłaniały kadru */
-    cursor: pointer;
-    text-shadow: 0 0 10px black;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: opacity 0.3s, background 0.3s;
-    z-index: 2002; /* Muszą być nad zdjęciem (2000) */
-}
-.lightbox-nav-btn:hover { background: rgba(0, 0, 0, 0.8); }
-
-#lightbox-prev { left: 10px; }
-#lightbox-next { right: 10px; }
-
-/* Ukrywanie strzałek, np. gdy jesteśmy na pierwszym zdjęciu (nie możemy cofać) */
-.lightbox-nav-btn.hidden-btn {
-    visibility: hidden;
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
-    /* Na telefonach przesunięcie do samej krawędzi ekranu */
-    .lightbox-nav-btn { font-size: 2rem; padding: 5px 10px; }
-    #lightbox-prev { left: 0px; }
-    #lightbox-next { right: 0px; }
+    .flex-view {
+        display: block; /* Wyłącza problematycznego flexa w poziomie */
+        padding: 15px;
+    }
+    .flex-view header img {
+        margin: 0 auto 15px auto; /* Wymusza centrowanie logotypu */
+    }
+    .flex-view .content-box {
+        margin: 0 auto 20px auto; /* Centruje ramkę */
+    }
+    .flex-view footer {
+        padding-bottom: 50px; /* Gigantyczny margines bezpieczeństwa na dolne paski przeglądarki */
+    }
 }
