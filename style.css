@@ -6,6 +6,7 @@
     --bg-box: rgba(255, 255, 255, 0.85);
 }
 
+/* Tryb wysokiego kontrastu - ELEGANCJA */
 body.high-contrast {
     --gold-mid: #111111;
     --gold-dark: #FFD700;
@@ -364,9 +365,13 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
 .grid-item:active { transform: scale(0.95); }
 .grid-footer { margin-top: auto; padding-bottom: 20px; }
 
+
+/* --- POPRAWKI DLA LIGHTBOXA (POWIĘKSZENIA) --- */
 .lightbox-overlay {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0; width: 100vw; 
+    height: 100vh;
+    height: 100dvh; /* NOWE: Dynamiczna wysokość (dvh) dostosowuje się idealnie do żółtych pasków Safari */
     background: rgba(0, 0, 0, 0.95);
     z-index: 2000;
     display: flex;
@@ -380,11 +385,14 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     pointer-events: none;
 }
 #lightbox-image {
-    max-width: 95vw;
-    max-height: 95vh;
+    max-width: 85vw; /* Zmniejszone, by dać przestrzeń na nowe strzałki nawigacyjne po bokach */
+    max-height: 85vh;
+    max-height: 85dvh; /* NOWE: Ochrona przed ucinaniem zdjęcia od dołu */
     object-fit: contain;
     border: 2px solid var(--gold-dark);
+    box-sizing: border-box; /* Zabezpiecza ramkę przed rozciąganiem kadru */
 }
+
 .lightbox-close {
     position: absolute;
     top: 20px; right: 20px;
@@ -397,6 +405,7 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     text-shadow: 0 0 10px black;
 }
 
+/* STRZAŁKI W LIGHTBOXIE */
 .lightbox-nav-btn {
     position: absolute;
     top: 50%;
@@ -422,6 +431,8 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     pointer-events: none;
 }
 
+
+/* --- ZAPYTANIA MEDIALNE (TELEFONY I LANDSCAPE) --- */
 @media (max-width: 768px) {
     .content-box { padding: 1.5rem 1rem; }
     h1 { font-size: 1.5rem; }
@@ -472,16 +483,23 @@ body.high-contrast .nav-btn:hover { background: rgba(0,0,0,0.8); }
     .gold-btn { padding: 8px 15px; font-size: 0.9rem; }
 
     .flex-view {
-        display: block; /* Wyłącza problematycznego flexa w poziomie */
+        display: block; 
         padding: 15px;
     }
     .flex-view header img {
-        margin: 0 auto 15px auto; /* Wymusza centrowanie logotypu */
+        margin: 0 auto 15px auto; 
     }
     .flex-view .content-box {
-        margin: 0 auto 20px auto; /* Centruje ramkę */
+        margin: 0 auto 20px auto; 
     }
     .flex-view footer {
-        padding-bottom: 50px; /* Gigantyczny margines bezpieczeństwa na dolne paski przeglądarki */
+        padding-bottom: 50px; 
+    }
+
+    /* NOWE: Ograniczenie wielkości zdjęcia w powiększeniu poziomo na małych ekranach */
+    #lightbox-image {
+        max-width: 75vw; /* Zwężenie na strzałki */
+        max-height: 80vh; 
+        max-height: 80dvh; /* Utrzymanie zdjęcia z dala od pasków URL */
     }
 }
