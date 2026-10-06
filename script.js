@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // --- KONFIGURACJA ---
     const TOTAL_IMAGES = 300;
     const IMAGE_PATH_PREFIX = 'img300/ZS_'; 
     const IMAGE_EXTENSION = '.jpg';
     let currentIndex = 1;
     let isHighContrast = localStorage.getItem('highContrast') === 'true';
+    let isLightboxActive = false; // Zmienna pilnująca, czy użytkownik ma otwarte powiększenie
 
+    // --- DOM ELEMENTS ---
     const viewWelcome = document.getElementById('view-welcome');
     const viewGallery = document.getElementById('view-gallery');
     const viewFarewell = document.getElementById('view-farewell');
@@ -33,18 +36,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-image');
     const lightboxClose = document.getElementById('lightbox-close');
-    const lightboxPrev = document.getElementById('lightbox-prev'); // NOWE
-    const lightboxNext = document.getElementById('lightbox-next'); // NOWE
+    const lightboxPrev = document.getElementById('lightbox-prev'); 
+    const lightboxNext = document.getElementById('lightbox-next'); 
 
-    document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+    // --- BLOKADA SYSTEMOWEGO PINCH-TO-ZOOM NA IOS (Wyłączana w powiększeniu) ---
+    document.addEventListener('gesturestart', function(e) { 
+        if(!isLightboxActive) e.preventDefault(); 
+    });
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function (event) {
+        if(isLightboxActive) return; // Pozwól powiększać dwoma palcami w lupie
         let now = (new Date()).getTime();
         if (now - lastTouchEnd <= 300) { event.preventDefault(); }
         lastTouchEnd = now;
     }, false);
 
 
+    // --- KONTRAST ---
     const applyContrast = () => {
         if (isHighContrast) document.body.classList.add('high-contrast');
         else document.body.classList.remove('high-contrast');
@@ -58,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // --- ROUTING I ZMIANA WIDOKÓW ---
     const switchView = (targetView) => {
         const currentActive = document.querySelector('.view.active');
         if (currentActive === targetView) return; 
@@ -111,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('hashchange', handleRouting);
 
 
+    // --- GENEROWANIE SIATKI Z LAZY LOADING ---
     let gridGenerated = false;
     const generateGrid = () => {
         if (gridGenerated) return; 
@@ -133,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
+    // --- NAWIGACJA PRZYCISKAMI MYSZKI/DOTYKIEM ---
     btnStart.addEventListener('click', () => { window.location.hash = '#gallery/1'; });
     
     [btnShowGrid, btnShowGridLandscape].forEach(btn => {
@@ -170,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // --- OBSŁUGA KLAWIATURY NA DESKTOPIE ---
     document.addEventListener('keydown', (e) => {
         const activeView = document.querySelector('.view.active');
         const isGallery = activeView === viewGallery;
@@ -194,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // --- AKTUALIZACJA ZDJĘCIA ---
     const updateGallery = () => {
         const formattedIndex = currentIndex.toString().padStart(3, '0');
         
@@ -218,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentIndex === 1) navPrev.classList.add('invisible'); 
         else navPrev.classList.remove('invisible'); 
 
-        // Ukrywanie strzałek w lightboxie na skrajnych zdjęciach
         if (currentIndex === 1) lightboxPrev.classList.add('hidden-btn');
         else lightboxPrev.classList.remove('hidden-btn');
 
@@ -227,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
+    // --- MECHANIKA LUPY I LIGHTBOXA ---
     let isTouchDevice = false;
     
     zoomableFrame.addEventListener('touchstart', (e) => {
@@ -256,17 +269,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const openLightbox = () => {
         lightboxImg.src = galleryImage.src;
         lightbox.classList.remove('hidden');
+        
+        // NOWE: Dynamiczne zdjęcie blokady powiększania dla telefonów
+        isLightboxActive = true;
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+        }
     };
 
     const closeLightbox = () => {
         lightbox.classList.add('hidden');
         zoomOverlay.classList.remove('active-touch');
+        
+        // NOWE: Natychmiastowe przywrócenie blokady i reset widoku po zamknięciu
+        isLightboxActive = false;
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
     };
 
     lightboxClose.addEventListener('click', closeLightbox);
 
     lightboxNext.addEventListener('click', (e) => {
-        e.stopPropagation(); // Blokuje zamknięcie lightboxa po kliknięciu
+        e.stopPropagation(); 
         if (currentIndex < TOTAL_IMAGES) {
             window.location.hash = `#gallery/${currentIndex + 1}`;
         } else if (currentIndex === TOTAL_IMAGES) {
@@ -282,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // --- LOGIKA GESTÓW (SWIPE) W POWIĘKSZENIU ---
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -319,6 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // --- INICJALIZACJA ---
     if (window.location.hash && window.location.hash !== '#welcome') {
         viewWelcome.classList.remove('active');
         viewWelcome.classList.add('hidden');
