@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <!-- Domyślnie zablokowane powiększanie, będzie kontrolowane przez JavaScript w trybie Lupy -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>30 lat Złotej Setki Dziennika Wschodniego</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -19,13 +20,14 @@
 
     <main id="app">
         
+        <!-- WIDOK 1: Powitanie -->
         <section id="view-welcome" class="view active flex-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-large clickable-logo">
             </header>
             
             <div class="content-box">
-               <h1>30 lat wspólnej historii</h1>
+                <h1>30 lat wspólnej historii</h1>
                 <p>
                     Od trzech dekad z dumą obserwujemy i wyróżniamy sukcesy najlepszych przedsiębiorstw w naszym regionie. 
                     Składamy Państwu najserdeczniejsze gratulacje za dotychczasowe osiągnięcia oraz wybitny wkład w gospodarczy rozwój Lubelszczyzny. 
@@ -33,7 +35,13 @@
                     Życzymy pomyślności i nieustannego rozwoju na kolejne lata!
                 </p>
                 <p class="signature">Redakcja Dziennika Wschodniego</p>
-                <button id="btn-start" class="gold-btn">ODKRYJ 30 LAT HISTORII</button>
+                
+                <!-- Zaktualizowany przycisk z wbudowanymi ikonami aparatu -->
+                <button id="btn-start" class="gold-btn">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    ODKRYJ 30 LAT HISTORII
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </button>
             </div>
             
             <footer>
@@ -41,6 +49,7 @@
             </footer>
         </section>
 
+        <!-- WIDOK 2: Galeria pojedyncza -->
         <section id="view-gallery" class="view hidden">
             <div class="landscape-sidebar landscape-left">
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-landscape clickable-logo">
@@ -102,6 +111,7 @@
             </footer>
         </section>
 
+        <!-- WIDOK 3: Siatka (Kafelki 300 zdjęć) -->
         <section id="view-grid" class="view hidden scrollable-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-small clickable-logo">
@@ -116,6 +126,7 @@
             </footer>
         </section>
 
+        <!-- WIDOK 4: Pożegnanie -->
         <section id="view-farewell" class="view hidden flex-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-large clickable-logo">
@@ -140,9 +151,9 @@
 
     </main>
 
+    <!-- LIGHTBOX (Powiększenie zdjęcia) -->
     <div id="lightbox" class="lightbox-overlay hidden">
         <button id="lightbox-close" class="lightbox-close" aria-label="Zamknij powiększenie">&times;</button>
-        <!-- NOWE: Strzałki nawigacyjne w lightboxie -->
         <button id="lightbox-prev" class="lightbox-nav-btn" aria-label="Poprzednie zdjęcie w powiększeniu">&#10094;</button>
         <img id="lightbox-image" src="" alt="Powiększenie">
         <button id="lightbox-next" class="lightbox-nav-btn" aria-label="Następne zdjęcie w powiększeniu">&#10095;</button>
