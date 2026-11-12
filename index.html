@@ -2,7 +2,6 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <!-- Domyślnie zablokowane powiększanie, będzie kontrolowane przez JavaScript w trybie Lupy -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>30 lat Złotej Setki Dziennika Wschodniego</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,7 +19,6 @@
 
     <main id="app">
         
-        <!-- WIDOK 1: Powitanie -->
         <section id="view-welcome" class="view active flex-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-large clickable-logo">
@@ -29,14 +27,10 @@
             <div class="content-box">
                 <h1>30 lat wspólnej historii</h1>
                 <p>
-                    Od trzech dekad z dumą obserwujemy i wyróżniamy sukcesy najlepszych przedsiębiorstw w naszym regionie. 
-                    Składamy Państwu najserdeczniejsze gratulacje za dotychczasowe osiągnięcia oraz wybitny wkład w gospodarczy rozwój Lubelszczyzny. 
-                    Niech ten wyjątkowy jubileusz będzie inspiracją do podejmowania kolejnych, odważnych wyzwań biznesowych.
-                    Życzymy pomyślności i nieustannego rozwoju na kolejne lata!
+                    Od trzech dekad z dumą obserwujemy i wyróżniamy sukcesy najlepszych przedsiębiorstw w naszym regionie. Składamy Państwu najserdeczniejsze gratulacje za dotychczasowe osiągnięcia oraz wybitny wkład w gospodarczy rozwój Lubelszczyzny. Niech ten wyjątkowy jubileusz będzie inspiracją do podejmowania kolejnych, odważnych wyzwań biznesowych. Życzymy pomyślności i nieustannego rozwoju na kolejne lata!
                 </p>
                 <p class="signature">Redakcja Dziennika Wschodniego</p>
                 
-                <!-- Zaktualizowany przycisk z wbudowanymi ikonami aparatu -->
                 <button id="btn-start" class="gold-btn">
                     <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                     ODKRYJ 30 LAT HISTORII
@@ -49,7 +43,6 @@
             </footer>
         </section>
 
-        <!-- WIDOK 2: Galeria pojedyncza -->
         <section id="view-gallery" class="view hidden">
             <div class="landscape-sidebar landscape-left">
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-landscape clickable-logo">
@@ -80,7 +73,7 @@
 
                 <div class="controls-area portrait-only">
                     <div class="image-counter">
-                        <span id="current-image-num">1</span> / 300
+                        <span id="current-image-num">1</span> / 324
                     </div>
                     <button id="btn-show-grid" class="subtle-btn">ZOBACZ WSZYSTKIE ZDJĘCIA</button>
                     <div class="skip-link" id="btn-skip">Przejdź do podsumowania &raquo;</div>
@@ -89,7 +82,7 @@
 
             <div class="landscape-sidebar landscape-right">
                 <div class="image-counter">
-                    <span id="landscape-current-num">1</span> / 300
+                    <span id="landscape-current-num">1</span> / 324
                 </div>
                 <div>
                     <button id="btn-show-grid-landscape" class="subtle-btn">ZOBACZ WSZYSTKIE ZDJĘCIA</button>
@@ -111,7 +104,6 @@
             </footer>
         </section>
 
-        <!-- WIDOK 3: Siatka (Kafelki 300 zdjęć) -->
         <section id="view-grid" class="view hidden scrollable-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-small clickable-logo">
@@ -126,19 +118,16 @@
             </footer>
         </section>
 
-        <!-- WIDOK 4: Pożegnanie -->
         <section id="view-farewell" class="view hidden flex-view">
             <header>
                 <img src="dziennikpl.png" alt="Dziennik Wschodni Logo" class="logo-large clickable-logo">
             </header>
             
             <div class="content-box">
-                <h1>Biznes, który inspiruje</h1>
+                <h1>Do zobaczenia!</h1>
                 <p>
                     Dziękujemy za wspólną podróż przez archiwa Złotej Setki. 
-                    To dzięki Waszym osiągnięciom i determinacji gospodarka Lubelszczyzny nieustannie rośnie w siłę.
-                    Życzymy pomyślności w realizacji nowych projektów, intratnych kontraktów oraz kolejnych spektakularnych triumfów.
-                    Z niecierpliwością czekamy na spotkanie na 31. edycji!
+                    Życzymy niesłabnącego zapału, kolejnych biznesowych triumfów i do zobaczenia na 31. edycji!
                 </p>
                 <p class="signature">Redakcja Dziennika Wschodniego</p>
                 <div class="skip-link" id="btn-restart">Wróć do początku &raquo;</div>
@@ -151,7 +140,6 @@
 
     </main>
 
-    <!-- LIGHTBOX (Powiększenie zdjęcia) -->
     <div id="lightbox" class="lightbox-overlay hidden">
         <button id="lightbox-close" class="lightbox-close" aria-label="Zamknij powiększenie">&times;</button>
         <button id="lightbox-prev" class="lightbox-nav-btn" aria-label="Poprzednie zdjęcie w powiększeniu">&#10094;</button>
